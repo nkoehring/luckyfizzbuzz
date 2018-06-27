@@ -1,4 +1,5 @@
 use std::fmt;
+use std::ops::Range;
 
 enum FizzBuzz {
     Fizz,
@@ -40,9 +41,9 @@ impl FizzBuzz {
         }
     }
 
-    fn range(a: i32, b: i32) -> String {
+    fn range(r: Range<i32>) -> String {
         let mut report = Report::new();
-        let mut output = (a..b)
+        let mut output = r
             .map(|n| format!("{}", FizzBuzz::single(n, &mut report)))
             .collect::<Vec<String>>()
             .join(" ");
@@ -74,13 +75,13 @@ impl Report {
 }
 
 fn main() {
-    println!("{}", FizzBuzz::range(1, 21));
+    println!("{}", FizzBuzz::range(1..21));
 }
 
 #[test]
 fn test_fizz_buzz() {
     let desired_output =  "1 2 lucky 4 buzz fizz 7 8 fizz buzz 11 fizz lucky 14 fizzbuzz 16 17 fizz 19 buzz\nfizz: 4\nbuzz: 3\nfizzbuzz: 1\nlucky: 2\ninteger: 10";
-    let actual_output = FizzBuzz::range(1, 21);
+    let actual_output = FizzBuzz::range(1..21);
 
     assert_eq!(desired_output, actual_output);
 }
